@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+{% else %}
+<!--<p>Please login to see this page.</p> -->
+{% endif %}
+{% endif %}
+<div class="cont_main">
+<div class="layout">
+	<div class="sect">
+		<p class="head_cool">
+			<span>TOMO</span>
+			<span>ANALYTICA</span>
+		</p>
+	</div>
+	<div class="sect"></div>
+</div>
+<div class="layout">
+	<section class="sect top">
+		<p class="head_cool">
+			<span>CLIENT SITE</span>
+		</p>
+	</section>
+	<section class="sect">
+		<form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+	<div class="form-group">
+		<label for="username" class="control-label">Username</label>
+		<input type="text" class="form-control" id="username" name="username" placeholder="">
+	</div>
+	<div class="form-group">
+		<label for="password" class="control-label">Password</label>
+		<input type="password" class="form-control" id="password" name="password" placeholder="">
+	</div>
+	<div class="form-group">
+        <input type="hidden" name="next" value="{{ next }}"/>
+
+		<button type="submit" class="btn btn-primary">Login</button>
+	</div>
+	</form>
+	</section>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+{% if not user.is_authenticated %}
+$("ul.nav.navbar-nav.navbar-right").css("display","none");
+{% endif %}
+
+
+
+
+</script>
+
+{% endblock %}
